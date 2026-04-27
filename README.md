@@ -16,13 +16,14 @@ cmd/app/main.go
     func main() {
     	defer err.Recover()
     	fmt.Println(env.Value[string]("${db.pass}"))
+    	// fmt.Println(env.Value[string]("${vault.path#key}"))
     }
 
 config/application.yaml
 
     db:
-    	pass: VAULT:my-secret-password:password
-    	# pass: VAULT:secret:my-secret-password:password
+    	pass: vault:path#key
+    	# pass: vault:mount:path#key
 
     vault:
     	address: http://127.0.0.1:8200
