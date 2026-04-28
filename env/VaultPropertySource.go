@@ -84,9 +84,7 @@ func (this *VaultPropertySource) getSecretValue(mount, secretPath, key string) s
 	secret := optional.OfCommaErr(this.client.KVv2(mount).Get(context.Background(), secretPath)).OrElsePanic("Unable to get " + secretPath)
 	value, ok := secret.Data[key]
 	lang.Assert(ok, "No %s present in %s", key, secretPath)
-	result, ok := value.(string)
-	lang.Assert(ok, "Value type assertion failed: %T %#v", value, value)
-	return result
+	return fmt.Sprint(value)
 }
 
 func (this *VaultPropertySource) newClient() *vault.Client {
