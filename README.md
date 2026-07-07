@@ -6,26 +6,30 @@ With a modular design based around a growing plugin ecosystem, Vault lets you in
 
 cmd/app/main.go
 
-    import (
-    	"github.com/go-external-config/go/env"
-    	vault "github.com/go-external-config/vault/env"
-    )
+```go
+import (
+	"github.com/go-external-config/go/env"
+	vault "github.com/go-external-config/vault/env"
+)
 
-    var _ = env.Instance().WithPropertySource(vault.NewVaultPropertySource())
+var _ = env.Instance().WithPropertySource(vault.NewVaultPropertySource())
 
-    func main() {
-    	defer err.Recover()
-    	fmt.Println(env.Value[string]("${db.pass}"))
-    	// fmt.Println(env.Value[string]("${vault.path#key}"))
-    }
+func main() {
+	defer err.Recover()
+	fmt.Println(env.Value[string]("${db.pass}"))
+	// fmt.Println(env.Value[string]("${vault.path#key}"))
+}
+```
 
 config/application.yaml
 
-    db:
-    	pass: vault:path#key
-    	# pass: vault:mount:path#key
+```yaml
+db:
+	pass: vault:path#key
+	# pass: vault:mount:path#key
 
-    vault:
-    	addr: http://127.0.0.1:8200
-    	token: generated
-    	# mount: secret
+vault:
+	addr: http://127.0.0.1:8200
+	token: generated
+	# mount: secret
+```
