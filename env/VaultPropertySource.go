@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/go-errr/go/err"
-	"github.com/go-errr/go/lang"
 	"github.com/go-external-config/go/env"
-	"github.com/go-external-config/go/util/optional"
+	"github.com/go-jang/go/lang"
+	"github.com/go-jang/go/util/optional"
 	vault "github.com/hashicorp/vault/api"
 )
 
