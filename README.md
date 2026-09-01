@@ -9,10 +9,8 @@ cmd/app/main.go
 ```go
 import (
 	"github.com/go-external-config/go/env"
-	vault "github.com/go-external-config/vault/env"
+	_ "github.com/go-external-config/vault"
 )
-
-var _ = env.Instance().WithPropertySource(vault.NewVaultPropertySource())
 
 func main() {
 	defer err.Recover()

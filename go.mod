@@ -3,9 +3,9 @@ module github.com/go-external-config/vault
 go 1.26.2
 
 require (
-	github.com/go-errr/go v1.0.13
-	github.com/go-external-config/go v1.0.40
-	github.com/go-jang/go v1.0.1
+	github.com/go-errr/go v1.0.14
+	github.com/go-external-config/go v1.0.44
+	github.com/go-jang/go v1.0.4
 	github.com/hashicorp/vault/api v1.23.0
 )
 
@@ -30,8 +30,8 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
-	golang.org/x/net v0.57.0 // indirect
-	golang.org/x/text v0.40.0 // indirect
+	golang.org/x/net v0.58.0 // indirect
+	golang.org/x/text v0.41.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

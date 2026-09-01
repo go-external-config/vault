@@ -19,13 +19,11 @@ const vault_token = "vault.token"
 const vault_mount = "vault.mount"
 
 type VaultPropertySource struct {
-	environment *env.Environment
-	client      *vault.Client
+	client *vault.Client
 }
 
 func NewVaultPropertySource() *VaultPropertySource {
 	ps := &VaultPropertySource{}
-	ps.environment = env.Instance()
 	ps.client = ps.newClient()
 	return ps
 }
@@ -47,7 +45,7 @@ func (this *VaultPropertySource) HasProperty(key string) bool {
 			return true
 		}
 	}
-	for _, source := range this.environment.PropertySources() {
+	for _, source := range env.PropertySources() {
 		if source.Properties() != nil && source.HasProperty(key) {
 			return strings.HasPrefix(source.Property(key), VAULT_VALUE_PREFIX)
 		}
@@ -57,11 +55,11 @@ func (this *VaultPropertySource) HasProperty(key string) bool {
 
 func (this *VaultPropertySource) Property(key string) string {
 	if strings.HasPrefix(key, VAULT_KEY_PREFIX) {
-		return this.resolveVaultProperty(fmt.Sprint(this.environment.ResolveRequiredPlaceholders(key[len(VAULT_KEY_PREFIX):])))
+		return this.resolveVaultProperty(fmt.Sprint(env.ResolveRequiredPlaceholders(key[len(VAULT_KEY_PREFIX):])))
 	}
-	for _, source := range this.environment.PropertySources() {
+	for _, source := range env.PropertySources() {
 		if source.Properties() != nil && source.HasProperty(key) {
-			return this.resolveVaultProperty(fmt.Sprint(this.environment.ResolveRequiredPlaceholders(source.Property(key)[len(VAULT_VALUE_PREFIX):])))
+			return this.resolveVaultProperty(fmt.Sprint(env.ResolveRequiredPlaceholders(source.Property(key)[len(VAULT_VALUE_PREFIX):])))
 		}
 	}
 	panic(err.NewIllegalArgumentException("No value present for " + key))
@@ -72,7 +70,7 @@ func (this *VaultPropertySource) resolveVaultProperty(property string) string {
 	if strings.Contains(property, ":") {
 		mount, path, _ = strings.Cut(property, ":")
 	} else {
-		mount = fmt.Sprint(this.environment.ResolveRequiredPlaceholders("${vault.mount:secret}"))
+		mount = fmt.Sprint(env.ResolveRequiredPlaceholders("${vault.mount:secret}"))
 		path = property
 	}
 	path, key, found := strings.Cut(path, "#")
@@ -89,9 +87,9 @@ func (this *VaultPropertySource) getSecretValue(mount, secretPath, key string) s
 
 func (this *VaultPropertySource) newClient() *vault.Client {
 	config := vault.DefaultConfig()
-	config.Address = this.environment.Property(vault_addr)
+	config.Address = env.Property(vault_addr)
 	client := optional.OfCommaErr(vault.NewClient(config)).OrElsePanic("Unable to initialize Vault client")
-	client.SetToken(this.environment.Property(vault_token))
+	client.SetToken(env.Property(vault_token))
 	return client
 }
 
