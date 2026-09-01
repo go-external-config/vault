@@ -23,11 +23,11 @@ config/application.yaml
 
 ```yaml
 db:
-	pass: vault:path#key
-	# pass: vault:mount:path#key
+  pass: vault:path#key
+  # pass: vault:mount:path#key
 
 vault:
-	addr: http://127.0.0.1:8200
-	token: generated
-	# mount: secret
+  addr: http://127.0.0.1:8200
+  token: generated
+  # mount: secret
 ```
